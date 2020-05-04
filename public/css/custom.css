@@ -28,12 +28,15 @@ body {
 }
 
 .navbar {
+    position: fixed;
     background-color: #2b7a78;
     color: #ffffff;
+    width: 100%;
+    z-index: 100;
 }
 
-a, a:hover {
-    color: white;
+.navbar a.nav-link, .navbar a.nav-link:hover, .navbar a.navbar-brand, .navbar a.navbar-brand:hover {
+    color: #ffffff;
 }
 
 .navbar-brand {
@@ -44,4 +47,45 @@ a, a:hover {
 .btn-simple {
     background-color: transparent;
     color: #2b7a78;
+}
+
+.sidebar {
+    width: 20%;
+    height: 92vh;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    top: 70px;
+}
+
+.sidebar a {
+    color: #000000;
+    font-weight: 700;    
+}
+
+.sidebar div.element {
+    border-bottom: 1px solid #cecece;
+    padding: 15px;
+}
+
+.sidebar div.element:hover {
+    background-color: #ffffff75;
+}
+
+.bg-grey {
+    background-color: #eeeeee;
+}
+
+.main-content {
+    width: 80%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    margin-top: 70px;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+}
+
+main {
+    overflow: hidden;
 }
