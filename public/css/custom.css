@@ -1,0 +1,47 @@
+body {
+    background: #fcfcfc  url("../../bg.png") !important;
+}
+
+.card {
+    padding: 20px;
+}
+
+.green-gradient-bg {
+    background: linear-gradient(60deg, #2b7a78, #17252a);
+}
+
+.card-header {
+    padding: 20px 0;
+    font-size: 20px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+}
+
+.navbar {
+    background-color: #2b7a78;
+    color: #ffffff;
+}
+
+a, a:hover {
+    color: white;
+}
+
+.navbar-brand {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 30px;
+}
+
+.btn-simple {
+    background-color: transparent;
+    color: #2b7a78;
+}
