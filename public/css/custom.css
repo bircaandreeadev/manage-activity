@@ -2,10 +2,6 @@ body {
     background: #fcfcfc  url("../../bg.png") !important;
 }
 
-.card {
-    padding: 20px;
-}
-
 .green-gradient-bg {
     background: linear-gradient(60deg, #2b7a78, #17252a);
 }
@@ -47,12 +43,12 @@ body {
 .btn-simple {
     background-color: transparent;
     color: #2b7a78;
+    border: 1px solid;
 }
 
 .sidebar {
     width: 20%;
     height: 92vh;
-    padding: 20px;
     position: fixed;
     bottom: 0;
     top: 70px;
@@ -73,7 +69,7 @@ body {
 }
 
 .bg-grey {
-    background-color: #eeeeee;
+    background-color: #e8f0f0;
 }
 
 .main-content {
@@ -88,4 +84,24 @@ body {
 
 main {
     overflow: hidden;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.card-login {
+    margin-top: 120px;
+}
+
+.flex {
+    display: flex;
+}
+
+.l-h {
+    line-height: 0.5rem
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(43, 122, 120, 0.11);
 }

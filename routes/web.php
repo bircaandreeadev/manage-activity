@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([
+    'middleware' => ['auth', 'can:manage users'],
+], function () {
+    Route::resources([
+        'users' => 'UsersController',
+    ]);
+});
