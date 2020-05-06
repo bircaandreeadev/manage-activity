@@ -28,11 +28,4 @@ class Board extends Model
     public function tasks() {
         return $this->hasMany('App\Task');
     }
-
-    /**
-     * Get the users for the boards.
-     */
-    public function users() {
-        return $this->belongsToMany('App\User');
-    }
 }

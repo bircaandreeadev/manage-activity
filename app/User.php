@@ -46,11 +46,4 @@ class User extends Authenticatable
     public function projects() {
         return $this->belongsToMany('App\Project');
     }
-
-    /**
-     * Get the boards for the users.
-     */
-    public function boards() {
-        return $this->belongsToMany('App\Boards');
-    }
 }
