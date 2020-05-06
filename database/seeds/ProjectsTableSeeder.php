@@ -27,39 +27,48 @@ class ProjectsTableSeeder extends Seeder
         DB::table('project_user')->insert([
             [
                 'user_id' => 1,
-                'project_id' => 1
+                'project_id' => 1,
+                'lead' => 1,
             ],
             [
                 'user_id' => 2,
-                'project_id' => 1
+                'project_id' => 1,
+                'lead' => 0,
             ],
             [
                 'user_id' => 4,
-                'project_id' => 1
+                'project_id' => 1,
+                'lead' => 0,
             ],
             [
                 'user_id' => 7,
-                'project_id' => 1
+                'project_id' => 1,
+                'lead' => 0,
             ],
             [
                 'user_id' => 1,
-                'project_id' => 2
+                'project_id' => 2,
+                'lead' => 1,
             ],
             [
                 'user_id' => 2,
-                'project_id' => 2
+                'project_id' => 2,
+                'lead' => 0,
             ],
             [
                 'user_id' => 3,
-                'project_id' => 2
+                'project_id' => 2,
+                'lead' => 0,
             ],
             [
                 'user_id' => 5,
-                'project_id' => 2
+                'project_id' => 2,
+                'lead' => 0,
             ],
             [
                 'user_id' => 6,
-                'project_id' => 2
+                'project_id' => 2,
+                'lead' => 0,
             ],
         ]);
     }

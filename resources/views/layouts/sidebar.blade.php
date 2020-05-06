@@ -1,6 +1,6 @@
 <div class="sidebar bg-grey p-20">
     <div class="element">
-        <a href=""><i class="fa fa-columns"></i> Board</a>
+        <a href=""><i class="fa fa-columns"></i> Projects</a>
     </div>
     @can('manage users')
         <div class="element">
