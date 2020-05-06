@@ -28,17 +28,11 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth', 'can:manage projects'],
-], function () {
-    Route::resources([
-        'projects' => 'ProjectsController',
-    ]);
-});
-
-Route::group([
     'middleware' => ['auth'],
 ], function () {
     Route::resources([
         'tasks' => 'TasksController',
+        'boards' => 'BoardsController',
+        'projects' => 'ProjectsController',
     ]);
 });

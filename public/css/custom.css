@@ -113,3 +113,29 @@ main {
 textarea {
     max-height: 200px;
 }
+
+.font-20 {
+    font-size: 20px;
+}
+
+.vertical-bottom {
+    vertical-align: bottom;
+}
+
+.card-task:hover {
+    background-color: #e8f0f0;
+    cursor: pointer;
+}
+
+.edit-task {
+    display: none;
+}
+
+.card-task:hover .edit-task {
+    display: block;
+}
+
+#modal-task {
+    display: none;
+}
+

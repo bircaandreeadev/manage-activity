@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\User;
+use App\Label;
+use Auth;
 
 class ProjectsController extends Controller
 {
@@ -73,7 +75,20 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $project = Project::findOrFail($id);
+
+        if(!($project->members()->containsStrict('id', Auth::user()->id) || $project->lead()->id == Auth::user()->id)) {
+            abort(403, 'Unauthorized action.');
+        }
+        
+        $users = User::all();
+        $labels = Label::all();
+        return view('projects.show', [
+            'project' => $project,
+            'users' => $users,
+            'labels' => $labels,
+        ]);
     }
 
     /**

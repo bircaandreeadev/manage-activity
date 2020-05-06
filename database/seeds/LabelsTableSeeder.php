@@ -48,7 +48,7 @@ class LabelsTableSeeder extends Seeder
             'title' => 'Highest',
             'description' => 'This problem will block process',
             'color' => '#89609e',            
-            'icon' => 'fa fa-angle-down',
+            'icon' => 'fa fa-angle-up',
             'priority' => 5,
         ]);
     }

@@ -29,6 +29,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // permissions for projects
         Permission::create(['name' => 'view project']);
         Permission::create(['name' => 'manage projects']);
+        Permission::create(['name' => 'manage boards']);
 
         $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo(Permission::all());
