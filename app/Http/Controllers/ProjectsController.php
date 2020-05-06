@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\User;
 
 class ProjectsController extends Controller
 {
@@ -27,7 +28,13 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        $leads = User::permission('manage projects')->get();
+
+        return view('projects.create', [
+            'users' => $users,
+            'leads' => $leads,
+        ]);
     }
 
     /**
@@ -38,7 +45,24 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Project::validate($request->toArray());
+        
+        if ($validator->fails()) {
+            return redirect('projects/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        // create project
+        $project = Project::create($request->toArray());
+
+        // attach  members
+        $project->users()->attach($request->get('members'));
+
+        // attach the lead project marked with 1
+        $project->users()->attach($request->get('lead'), ['lead' => 1]);
+
+        return redirect('projects')->with('status', 'Project created!');
     }
 
     /**
@@ -60,7 +84,14 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $users = User::all();
+        $leads = User::permission('manage projects')->get();
+        return view('projects.edit', [
+            'project' => $project,
+            'users' => $users,
+            'leads' => $leads,
+        ]);
     }
 
     /**
@@ -72,7 +103,26 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Project::validate($request->toArray());
+        
+        if ($validator->fails()) {
+            return redirect("projects/$id/edit")
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        // update project
+        $project = Project::findOrFail($id);
+        $project->update($request->toArray());
+
+        $project->users()->detach();
+        // attach members
+        $project->users()->attach($request->get('members'));
+
+        // attach the lead project marked with 1
+        $project->users()->attach($request->get('lead'), ['lead' => 1]);
+
+        return redirect('projects')->with('status', 'Project updated!');
     }
 
     /**
@@ -83,6 +133,10 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        $project->delete();
+
+        return redirect('projects')->with('status', 'Project deleted!');
     }
 }

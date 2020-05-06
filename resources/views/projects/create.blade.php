@@ -4,17 +4,18 @@
     <div class="main-content p-20">
         <div class="top">
             <div class="text-left">
-                <h2>Add user</h2>
+                <h2>Add project</h2>
             </div>
         </div>
         <div class="mt-3 d-flex">
-            <form class="w-50" autocomplete="off">
+            <form class="w-50" autocomplete="off" action="{{route('projects.store')}}" method="POST">
+                @csrf
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Name</label>
+                    <label for="title" class="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-9">
-                        <input autocomplete="off" placeholder="Enter name" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                        <input autocomplete="off" placeholder="Enter title" id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
 
-                        @error('name')
+                        @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -23,11 +24,11 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="email" class="col-sm-3 col-form-label">Email</label>
+                    <label for="description" class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
-                        <input autocomplete="off" placeholder="Enter email" id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                        <textarea rows="13" autocomplete="off" placeholder="Enter description" id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
 
-                        @error('email')
+                        @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -36,11 +37,11 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="password" class="col-sm-3 col-form-label">Password</label>
+                    <label for="tag" class="col-sm-3 col-form-label">Tag</label>
                     <div class="col-sm-9">
-                        <input autocomplete="off" type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" name="password" value="{{ old('password') }}" required>
-                       
-                        @error('password')
+                        <input autocomplete="off" placeholder="Enter tag" id="tag" type="text" class="form-control @error('tag') is-invalid @enderror" name="tag" value="{{ old('tag') }}">
+
+                        @error('tag')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -49,14 +50,15 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="permissions" class="col-sm-3 col-form-label">Permissions</label>
+                    <label for="lead" class="col-sm-3 col-form-label">Project lead</label>
                     <div class="col-sm-9">
-                        <select class="form-control js-example-basic-multiple" multiple="multiple" id="permissions" name="permissions[]" @error('permissions') is-invalid @enderror value="{{ old('permissions[]') }}" required>
-                            @foreach($permissions as $permission)
-                                <option value="{{$permission->id}}">{{$permission->name}}</option>
+                        <select class="form-control @error('lead') is-invalid @enderror" id="lead" name="lead"value="{{ old('lead') }}">
+                            <option disabled selected value="">Select an option</option>
+                            @foreach($leads as $lead)
+                                <option value="{{$lead->id}}">{{$lead->name}}</option>
                             @endforeach
                         </select>
-                        @error('permissions')
+                        @error('lead')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -65,17 +67,17 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="projects" class="col-sm-3 col-form-label">Projects</label>
+                    <label for="members" class="col-sm-3 col-form-label">Members</label>
                     <div class="col-sm-9">
-                        <select class="form-control js-example-basic-multiple" multiple="multiple" id="projects" name="projects[]" @error('projects') is-invalid @enderror value="{{ old('projects[]') }}" required>
-                            @foreach($projects as $project)
-                                <option value="{{$project->id}}">{{$project->title}}</option>
+                        <select class="form-control js-example-basic-multiple @error('members') is-invalid @enderror" multiple="multiple" id="members" name="members[]" value="{{ old('members[]') }}">
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
                         </select>
-                        @error('projects')
+                        @error('members')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
-               a             </span>
+                            </span>
                         @enderror
                     </div>
                 </div>

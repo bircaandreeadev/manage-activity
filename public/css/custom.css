@@ -105,3 +105,11 @@ main {
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(43, 122, 120, 0.11);
 }
+
+.badge-simple {
+    border: 1px solid #2b7a78;
+}
+
+textarea {
+    max-height: 200px;
+}
