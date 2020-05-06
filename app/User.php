@@ -39,4 +39,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+    * Get the projects for the users.
+    */
+    public function projects() {
+        return $this->belongsToMany('App\Project');
+    }
+
+    /**
+     * Get the boards for the users.
+     */
+    public function boards() {
+        return $this->belongsToMany('App\Boards');
+    }
 }
