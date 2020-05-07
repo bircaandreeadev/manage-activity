@@ -51,6 +51,21 @@ class User extends Authenticatable
     }
 
     /**
+    * Get the tasks for the users.
+    */
+    public function tasks() {
+        return $this->hasMany('App\User');
+    }
+
+    /**
+     * Get the tasks created by the user
+     */
+
+    public function createdTasks() {
+        return $this->hasMany('App\User', 'created_by_user_id', 'user_id');
+    }
+
+    /**
      * Validate inputs
      */
     public static function validate(array $input)
@@ -58,7 +73,7 @@ class User extends Authenticatable
         $validator = Validator::make($input, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'requried|confirmed',
+            'password' => 'required',
         ]);
 
         return $validator;

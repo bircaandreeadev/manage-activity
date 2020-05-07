@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     @foreach($projects as $project) 
-                        @if($project->members()->containsStrict('id', Auth::user()->id) || $project->lead()->id == Auth::user()->id))
+                        @if($project->members()->containsStrict('id', Auth::user()->id) || $project->lead()->id == Auth::user()->id)
                             <tr>
                                 <td>
                                     <a href="{{route('projects.show', $project->id)}}">{{$project->title}}<a>

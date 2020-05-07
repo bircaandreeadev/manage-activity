@@ -139,3 +139,14 @@ textarea {
     display: none;
 }
 
+.mt-10 {
+    margin-top: 6rem!important;
+}
+
+.mx-10 {
+    margin-right: 6rem!important;
+}
+
+#create-board {
+    display: none;
+}

@@ -13,7 +13,7 @@ class Task extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'due_date', 'completed', 'label_id', 'user_id', 'board_id'
+        'title', 'due_date', 'completed', 'label_id', 'user_id', 'board_id', 'created_by_user_id',
     ];
 
     /**
@@ -31,6 +31,13 @@ class Task extends Model
     }
 
     /**
+     * Get the user who create the task.
+     */
+    public function createdBy() {
+        return $this->belongsTo('App\User', 'created_by_user_id');
+    }
+
+    /**
      * Get the label of the task.
      */
     public function label() {
@@ -45,7 +52,6 @@ class Task extends Model
         $validator = Validator::make($input, [
             'title' => 'required',
             'due_date' => 'required|date',
-            'completed' => 'date',
             'label_id' => 'required|exists:labels,id', 
             'user_id' => 'required|exists:users,id',
             'board_id' => 'required|exists:boards,id',

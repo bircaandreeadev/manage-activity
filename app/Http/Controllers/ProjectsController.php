@@ -73,7 +73,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         
         $project = Project::findOrFail($id);
@@ -84,6 +84,10 @@ class ProjectsController extends Controller
         
         $users = User::all();
         $labels = Label::all();
+        
+        if($request->ajax()) {
+            return json_encode($project->boards);
+        }
         return view('projects.show', [
             'project' => $project,
             'users' => $users,

@@ -18,6 +18,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 1,
             'user_id' => 2,
             'board_id' => 2,
+            'created_by_user_id' => 1,
         ]);
         Task::create([
             'title' => 'Models and relationships',
@@ -25,6 +26,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 1,
             'user_id' => 2,
             'board_id' => 2,
+            'created_by_user_id' => 1,
         ]);
         Task::create([
             'title' => 'Welcome page',
@@ -32,6 +34,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 2,
             'user_id' => 4,
             'board_id' => 1,
+            'created_by_user_id' => 4,
         ]);
         Task::create([
             'title' => 'Design database',
@@ -39,6 +42,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 1,
             'user_id' => 2,
             'board_id' => 4,
+            'created_by_user_id' => 2,
         ]);
         Task::create([
             'title' => 'Setup server',
@@ -46,6 +50,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 1,
             'user_id' => 3,
             'board_id' => 4,
+            'created_by_user_id' => 1,
         ]);
         Task::create([
             'title' => 'Welcome page',
@@ -53,6 +58,7 @@ class TasksTableSeeder extends Seeder
             'label_id' => 2,
             'user_id' => 5,
             'board_id' => 4,
+            'created_by_user_id' => 1,
         ]);
     }
 }

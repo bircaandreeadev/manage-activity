@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Project;
+use App\Label;
+use App\User;
 use Auth;
 
 class TasksController extends Controller
@@ -19,15 +22,17 @@ class TasksController extends Controller
 
         if($user->hasPermissionTo('manage tasks')) {
             $tasks = Task::join('labels', 'labels.id', '=', 'tasks.label_id')
-            ->orderBy('due_date', 'desc')
-            ->orderBy('labels.priority', 'desc')
+            ->orderBy('completed', 'asc')
+            ->orderBy('due_date', 'asc')
+            ->orderBy('labels.priority', 'asc')
             ->select('tasks.*') //see PS:
             ->get();
         } else {
             $tasks = Task::join('labels', 'labels.id', '=', 'tasks.label_id')
             ->where('tasks.user_id', $user->id)
-            ->orderBy('tasks.due_date', 'desc')
-            ->orderBy('labels.priority', 'desc')
+            ->orderBy('completed', 'asc')
+            ->orderBy('due_date', 'asc')
+            ->orderBy('labels.priority', 'asc')
             ->select('tasks.*') //see PS:
             ->get();
         }
@@ -44,7 +49,14 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        $projects = Project::all();
+        $labels = Label::all();
+        $users = User::all();
+        return view('tasks.create', [
+            'projects' => $projects,
+            'labels' => $labels,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -57,15 +69,22 @@ class TasksController extends Controller
     {
         $validator = Task::validate($request->toArray());
         $project_id = $request->get('project_id');
-        if ($validator->fails()) {
+        if ($validator->fails() && $request->get('task')) {
+            return redirect("tasks")
+                        ->withErrors($validator);
+        } elseif($validator->fails()) {
             return redirect("projects/$project_id")
-                        ->with('fail', 1)
+                        ->with('fail_task', 1)
                         ->withErrors($validator);
         }
-
+        $data = $request->toArray();
+        $data['created_by_user_id'] = Auth::id();
         // create task
-        $task = Task::create($request->toArray());
+        $task = Task::create($data);
 
+        if($request->get('task')) {
+            return redirect("tasks")->with('status', 'Task created!');
+        }
         return redirect("projects/$project_id")->with('status', 'Task created!');
     }
 
@@ -79,6 +98,7 @@ class TasksController extends Controller
     {
         $task = Task::findOrFail($id);
         $task->setAttribute('url', route('tasks.update', $id));
+        $task->setAttribute('project_id', $task->board->project->id);
         return $task;
     }
 
@@ -90,7 +110,16 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $project = Project::findOrFail($task->board->project->id);
+        $labels = Label::all();
+        $users = User::all();
+        return view('tasks.edit', [
+            'project' => $project,
+            'labels' => $labels,
+            'users' => $users,
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -104,15 +133,26 @@ class TasksController extends Controller
     {
         $validator = Task::validate($request->toArray());
         $project_id = $request->get('project_id');
-        if ($validator->fails()) {
+
+        if ($validator->fails() && $request->get('task')) {
+            return redirect("tasks/$id/edit")
+                        ->withErrors($validator);
+        } elseif($validator->fails()) {
             return redirect("projects/$project_id")
-                        ->with('fail', 1)
+                        ->with('fail_task', 1)
                         ->withErrors($validator);
         }
 
         // update task
         $task = Task::findOrFail($id);
-        $task->update($request->toArray());
+
+        $data = $request->toArray();
+
+        $task->update($data);
+
+        if($request->get('task')) {
+            return redirect("tasks")->with('status', 'Task updated!');
+        }
 
         return redirect("projects/$project_id")->with('status', 'Task updated!');
     }
@@ -125,6 +165,10 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $task->delete();
+
+        return redirect('tasks')->with('status', 'Task deleted!');
     }
 }

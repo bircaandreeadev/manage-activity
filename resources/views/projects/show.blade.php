@@ -19,9 +19,9 @@
                 </div>
             @endcan
         </div>
-        <div class="mt-3 d-flex">
-            @foreach($project->boards as $board)
-                <div class="card p-20 col-md-3 mx-1">
+        <div class="mt-3 d-flex row">
+            @foreach($project->boards as $key => $board)
+                <div class="card p-20 col-3 mx-10 my-2">
                     <ul class="text-center card-header green-gradient-bg text-white">{{$board->title}}</ul>
 
                     <div class="card-body">
@@ -49,6 +49,7 @@
                                     <small class="text-right">Completed at: {{$task->completed}}</small>
                                 @endif
                                 <small class="text-right">Assigned to: {{$task->user->name}}</small>
+                                <small class="font-weight-bolder text-right">Created by: {{$task->createdBy->name}}</small>
                             </div>
                             @can('manage tasks')
                                 </a>
@@ -56,11 +57,14 @@
                         @endforeach
                     </div>
                 </div>
+                @if($key == 2) 
+                    <div class="w-100"></div>
+                @endif
             @endforeach
         </div>
     </div>
       
-    <div id="create-task" class="modal bd-example-modal-lg @if (session('fail')) d-block @endif" tabindex="-1" role="dialog">
+    <div id="create-task" class="modal bd-example-modal-lg @if (session('fail_task')) d-block @endif" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -167,7 +171,7 @@
         </div>
     </div>
 
-    <div id="update-task" class="modal bd-example-modal-lg @if (session('fail')) d-block @endif" tabindex="-1" role="dialog">
+    <div id="update-task" class="modal bd-example-modal-lg @if (session('fail_task')) d-block @endif" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -262,10 +266,63 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="completed" class="col-sm-3 col-form-label">Completed</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" placeholder="Enter date" id="completed" type="date" class="form-control @error('completed') is-invalid @enderror" name="completed" value="{{ $task->completed }}">
+        
+                                @error('completed')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group mb-0">
                             <div class="pull-right">
                                 <button type="submit" class="btn btn-simple">
                                     Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="create-board" class="modal bd-example-modal-lg @if (session('fail')) d-block @endif" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add board</h5>
+                    <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{route('boards.store')}}">
+                        @csrf
+                        <input type="hidden" value="{{$project->id}}" name="project_id">
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-3 col-form-label">Title</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" placeholder="Enter title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
+        
+                                @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-simple">
+                                    Create
                                 </button>
                             </div>
                         </div>

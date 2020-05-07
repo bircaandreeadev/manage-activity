@@ -41,6 +41,7 @@ $(document).ready(function() {
             $('#board_id').val(data.board_id);     
             $('#user_id').val(data.user_id);  
             $('#label_id').val(data.label_id);  
+            $('#project_id').val(data.project_id);  
             $('#due_date').val(data.due_date);  
             
             $('#btn-save').val("update");
@@ -53,6 +54,19 @@ $(document).ready(function() {
 
     $('.close-modal-edit').click(function() {
         modal = $("#update-task");
+        modal.removeClass('d-block');
+        modal.css('display', 'none');
+        $('input').removeClass('is-invalid');
+        $('select').removeClass('is-invalid');
+    });
+
+    $('.add-board').click(function() {
+        modal = $("#create-board");
+        modal.css('display', 'block');
+    });
+
+    $('.close-modal').click(function() {
+        modal = $("#create-board");
         modal.removeClass('d-block');
         modal.css('display', 'none');
         $('input').removeClass('is-invalid');

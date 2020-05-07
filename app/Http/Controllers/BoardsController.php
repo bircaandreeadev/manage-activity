@@ -38,7 +38,18 @@ class BoardsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Board::validate($request->toArray());
+        $project_id = $request->get('project_id');
+        if ($validator->fails()) {
+            return redirect("projects/$project_id")
+                        ->with('fail', 1)
+                        ->withErrors($validator);
+        }
+
+        // create board
+        $board = Board::create($request->toArray());
+
+        return redirect("projects/$project_id")->with('status', 'Board created!');
     }
 
     /**

@@ -20,10 +20,12 @@ class CreateTasksTable extends Migration
             $table->date('completed')->nullable();
 
             $table->unsignedBigInteger('label_id');
+            $table->unsignedBigInteger('created_by_user_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('board_id');
 
             $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
+            $table->foreign('created_by_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('board_id')->references('id')->on('boards')->onDelete('cascade');
 
